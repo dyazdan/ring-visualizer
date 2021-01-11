@@ -24,4 +24,4 @@ Some minor things I noticed:
 Honestly, I just fired this up in _Chrome 87_ and it worked, which was good enough for me. I willingly accepted that it currently fails in Safari/Firefox due to the visualizer being wrapped in a class that makes use of private fields. If you really need it in another browser, _babel_ might do the trick (or just copy the bits and pieces to your own script and keep everything public).
 
 ## Miscellanous
-If you like what I did, feel free to leave me a star at my [GitHub repo](https://github.com/dyazdan/ring-visualizer), visit my [homepage](https://dyaz.de) or hit me up on social media!
+If you like what I did, feel free to give me some credit, leave me a star at my [GitHub repo](https://github.com/dyazdan/ring-visualizer), visit my [homepage](https://dyaz.de) or hit me up on social media!
