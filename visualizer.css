@@ -1,0 +1,44 @@
+/* Change colors here */
+:root {
+    --background-color: #202020;
+    --primary-color: #706344;    /*#706344;*/
+    --highlight-color: #ffffff;
+}
+
+/* Some basic body stylings */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    font-family: monospace;
+    font-size: 16px;
+    color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+/* Width, height and color of the visualizer. The actual visualizer size is derived from this. */
+#visualizer-canvas {
+    width: 420px;
+    height: 420px;
+    color: var(--primary-color);
+}
+
+/* Just some stuff to get my logo rockin' in there */
+#logo {
+    width: 3rem;
+    height: 3rem;
+    margin: 2rem;
+}
+
+#logo > a {
+    color: var(--primary-color);
+    transition: color 2s ease;
+}
+
+#logo > a:hover {
+    color: var(--highlight-color);
+}
+
