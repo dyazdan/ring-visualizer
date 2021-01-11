@@ -1,4 +1,5 @@
 # ring-visualizer
+![ring visualizer screenshot](https://github.com/dyazdan/ring-visualizer/blob/main/assets/screenshot.png)
 >A ring shaped audio visualizer that uses and demos the ease of Web Audio API's analyzer node to generate its visuals.
 
 I needed some kind of visual feedback for audio playback on a website in another project, so I created a small audio loop, fired up a browser-default player and started to fiddle around with the [Web Audio API](https://webaudio.github.io/web-audio-api/#audionode). As I found it to be pretty convenient to get something fancy looking up and running quite fast, I thought I'd drop it as a demo here.
