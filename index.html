@@ -10,16 +10,15 @@
 <!-- Adds the target DOM element for the visualizer -->
 <div id="visualizer">visualizer not loaded.</div>
 
-
 <!-- Creates a standard audio player -->
-<audio id="player" onplay="visualizer.start()" onpause="visualizer.stop()" controls autoplay loop>
+<audio id="player" onplay="visualizer.start()" onpause="visualizer.stop()" autoplay loop>
     <source src="assets/dyaz-vizard.mp3" type="audio/mpeg">
     your browser doesn't support playback of MP3 files
 </audio>
 
 <!-- Adds my logo for some fun -->
-<span id="logo">
-    <a href="https://dyaz.de" target="_blank" title="dyaz.de">
+<div id="logo">
+    <a class="external-link" href="https://dyaz.de" target="_blank" title="dyaz.de">
         <svg width="100%" height="100%" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"
              xml:space="preserve"
              style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
@@ -27,7 +26,20 @@
                   d="M512,0L0,0L0,512L512,512L512,0ZM288,288L288,240L304,240L304,288L328,288L328,240L344,240L344,304L336,304L336,312L328,312L328,320L288,320L288,312L320,312L320,304L328,304L328,296L296,296L296,288L288,288ZM96,312L96,304L160,304L160,312L96,312ZM48,288L48,280L56,280L56,272L64,272L64,264L72,264L72,256L64,256L64,248L56,248L56,240L48,240L48,232L40,232L40,224L56,224L56,232L64,232L64,240L72,240L72,248L80,248L80,256L88,256L88,264L80,264L80,272L72,272L72,280L64,280L64,288L56,288L56,296L40,296L40,288L48,288ZM352,288L352,264L360,264L360,256L384,256L384,248L360,248L360,240L392,240L392,248L400,248L400,288L408,288L408,296L392,296L392,288L384,288L384,264L368,264L368,288L384,288L384,296L360,296L360,288L352,288ZM416,280L424,280L424,272L432,272L432,264L440,264L440,256L448,256L448,248L432,248L432,256L416,256L416,240L472,240L472,248L464,248L464,256L456,256L456,264L448,264L448,272L440,272L440,280L432,280L432,288L456,288L456,280L472,280L472,296L416,296L416,280ZM224,288L224,256L232,256L232,248L240,248L240,240L256,240L256,224L248,224L248,216L272,216L272,288L280,288L280,296L264,296L264,288L256,288L256,248L248,248L248,256L240,256L240,288L256,288L256,296L232,296L232,288L224,288Z"
                   style="fill:currentColor"/></svg>
     </a>
-</span>
+</div>
+
+<!-- Info footer -->
+<div id="footer">
+    <span>>_ audio and visuals by dyaz. grab the code on github.</span>
+    <a id="github-logo" class="external-link" href="https://github.com/dyazdan/ring-visualizer"
+       title="Visit dyazdan/ring-visualizer on GitHub" target="_blank">
+        <svg height="24" viewBox="0 0 16 16" version="1.1" width="24" aria-hidden="true">
+            <path fill-rule="evenodd"
+                  d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+                  style="fill:currentColor"></path>
+        </svg>
+    </a>
+</div>
 
 <!-- Loads the visualizer script -->
 <script src="visualizer.js" type="application/javascript"></script>

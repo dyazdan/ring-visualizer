@@ -2,7 +2,11 @@
 :root {
     --background-color: #202020;
     --primary-color: #706344;    /*#706344;*/
-    --highlight-color: #ffffff;
+    --highlight-color: #00b0ff;
+}
+
+html, body {
+    height: 100%;
 }
 
 /* Some basic body stylings */
@@ -21,9 +25,15 @@ body {
 
 /* Width, height and color of the visualizer. The actual visualizer size is derived from this. */
 #visualizer-canvas {
-    width: 420px;
-    height: 420px;
+    width: 75vw;
+    height: 75vh;
     color: var(--primary-color);
+    transition: color 2s ease;
+}
+
+/* The visualizer is color-aware, e.g. for animation on hover */
+#visualizer-canvas:hover {
+    color: var(--highlight-color);
 }
 
 /* Just some stuff to get my logo rockin' in there */
@@ -33,12 +43,25 @@ body {
     margin: 2rem;
 }
 
-#logo > a {
+#footer {
+    font-size: 12px;
+    display: inline-flex;
+    height: 3em;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: auto;
+}
+
+/* Fancy colors for the links */
+.external-link {
     color: var(--primary-color);
     transition: color 2s ease;
 }
 
-#logo > a:hover {
+.external-link:hover {
     color: var(--highlight-color);
 }
 
+#github-logo {
+    margin-left: 1em;
+}
