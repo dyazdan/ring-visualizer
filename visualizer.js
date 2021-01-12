@@ -2,23 +2,23 @@ console.debug('visualizer script loaded');
 
 class Visualizer {
 
-    #size = 150;                    // The shortest side of the visualization canvas in px, defaults to 150
-    #color = 'rgb(0, 191, 255)';    // The visualization color in rgb(), defaults to a nice blue
+    size = 150;                    // The shortest side of the visualization canvas in px, defaults to 150
+    color = 'rgb(0, 191, 255)';    // The visualization color in rgb(), defaults to a nice blue
 
-    #isReady = false;       // True after successful initialization
-    #isVisualizing = false; // True if the visualizer is currently animating
+    isReady = false;       // True after successful initialization
+    isVisualizing = false; // True if the visualizer is currently animating
 
-    #mediaElement;  // The audio/video DOM element the audio context relates to, identified by 'player'
-    #audioContext;  // The audio context
-    #audioSource;   // The audio source created from the media element
+    mediaElement;  // The audio/video DOM element the audio context relates to, identified by 'player'
+    audioContext;  // The audio context
+    audioSource;   // The audio source created from the media element
 
-    #analyser;                  // The audio analyser node
-    #analyserTimeDomainData;    // The array holding the analyser time domain data (typically ~127 when idle)
-    #analyserFrequencyData;     // The array holding the analyser frequency data (in the 0-255 range)
+    analyser;                  // The audio analyser node
+    analyserTimeDomainData;    // The array holding the analyser time domain data (typically ~127 when idle)
+    analyserFrequencyData;     // The array holding the analyser frequency data (in the 0-255 range)
 
-    #canvas;        // The HTML canvas element the visualizer draws on
-    #canvasContext; // The canvas' 2D context
-    #domElement;    // The DOM element that is replaced by the visualizer, identified by 'visualizer'
+    canvas;        // The HTML canvas element the visualizer draws on
+    canvasContext; // The canvas' 2D context
+    domElement;    // The DOM element that is replaced by the visualizer, identified by 'visualizer'
 
     // Fire me up!
     constructor() {
@@ -29,70 +29,70 @@ class Visualizer {
     init() {
 
         // Locate the HTML element representing an audio source (i.e. player)
-        this.#mediaElement = document.getElementById('player');
-        if (!this.#mediaElement) throw 'media element not found';
+        this.mediaElement = document.getElementById('player');
+        if (!this.mediaElement) throw 'media element not found';
 
         // Get the audio context
-        this.#audioContext = new (window.AudioContext || window.webkitAudioContext)()
-        this.#audioSource = this.#audioContext.createMediaElementSource(this.#mediaElement);
-        if (!(this.#audioSource && this.#audioContext)) throw `couldn't set up audio source or context`;
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        this.audioSource = this.audioContext.createMediaElementSource(this.mediaElement);
+        if (!(this.audioSource && this.audioContext)) throw `couldn't set up audio source or context`;
 
         // Create and configure the analyzer
-        this.#analyser = this.#audioContext.createAnalyser();
-        this.#analyser.fftSize = 64;
-        this.#analyser.minDecibels = -128;
-        this.#analyser.maxDecibels = 0;
-        this.#analyser.smoothingTimeConstant = 0.5;
-        this.#analyser.connect(this.#audioContext.destination);
-        this.#audioSource.connect(this.#analyser);
-        this.#analyserTimeDomainData = new Uint8Array(this.#analyser.fftSize);
-        this.#analyserFrequencyData = new Uint8Array(this.#analyser.frequencyBinCount);
-        if (!(this.#analyser && this.#audioSource && this.#analyserFrequencyData && this.#analyserTimeDomainData)) {
+        this.analyser = this.audioContext.createAnalyser();
+        this.analyser.fftSize = 64;
+        this.analyser.minDecibels = -128;
+        this.analyser.maxDecibels = 0;
+        this.analyser.smoothingTimeConstant = 0.5;
+        this.analyser.connect(this.audioContext.destination);
+        this.audioSource.connect(this.analyser);
+        this.analyserTimeDomainData = new Uint8Array(this.analyser.fftSize);
+        this.analyserFrequencyData = new Uint8Array(this.analyser.frequencyBinCount);
+        if (!(this.analyser && this.audioSource && this.analyserFrequencyData && this.analyserTimeDomainData)) {
             throw `couldn't set up analyzer`;
         }
 
         // Create the canvas
-        this.#canvas = document.createElement('canvas');
-        this.#canvas.id = 'visualizer-canvas';
-        this.#canvas.width = this.#canvas.height = this.#size;
-        this.#canvasContext = this.#canvas.getContext("2d");
-        if (!(this.#canvas && this.#canvasContext)) {
+        this.canvas = document.createElement('canvas');
+        this.canvas.id = 'visualizer-canvas';
+        this.canvas.width = this.canvas.height = this.size;
+        this.canvasContext = this.canvas.getContext("2d");
+        if (!(this.canvas && this.canvasContext)) {
             throw `couldn't set up canvas or canvas context`;
         }
 
         // Find the HTML DOM element to replace by the visualizer
-        this.#domElement = document.getElementById('visualizer');
-        if (!this.#domElement) {
+        this.domElement = document.getElementById('visualizer');
+        if (!this.domElement) {
             throw `couldn't set up DOM element`;
         }
 
         // Create the <div> container holding the canvas
         const container = document.createElement('div');
-        container.append(this.#canvas);
-        this.#domElement.replaceWith(container);
+        container.append(this.canvas);
+        this.domElement.replaceWith(container);
         container.id = 'visualizer';
 
         // Sneak into the computed CSS-styles; This is necessary to correctly size the canvas render area
-        let domElementStyle = getComputedStyle(this.#canvas);
+        let domElementStyle = getComputedStyle(this.canvas);
         const width = domElementStyle.getPropertyValue('width').replace('px', '');
         const height = domElementStyle.getPropertyValue('height').replace('px', '');
         const color = domElementStyle.getPropertyValue('color');
-        this.#canvas.width = width;
-        this.#canvas.height = height;
-        this.#size = width > height ? height : width;
-        this.#color = color;
-        console.debug(`visualizer canvas derived ${this.#canvas.width}x${this.#canvas.height} from styles`);
+        this.canvas.width = width;
+        this.canvas.height = height;
+        this.size = width > height ? height : width;
+        this.color = color;
+        console.debug(`visualizer canvas derived ${this.canvas.width}x${this.canvas.height} from styles`);
 
         // If we're all done and nothing threw an error, let's go!
-        this.#isReady = true;
+        this.isReady = true;
         console.debug(`visualizer initialized:`);
         console.debug(this);
     }
 
     // Starts the visualization and animation loop
     start() {
-        if (this.#isReady === true) {
-            this.#isVisualizing = true;
+        if (this.isReady === true) {
+            this.isVisualizing = true;
             this.animate();
             console.debug(`visualizer started`);
         } else {
@@ -102,8 +102,8 @@ class Visualizer {
 
     // Stops the visualization
     stop() {
-        if (this.#isVisualizing === true) {
-            this.#isVisualizing = false;
+        if (this.isVisualizing === true) {
+            this.isVisualizing = false;
             console.debug(`visualizer stopped`);
         } else {
             console.warn(`visualizer wasn't started, couldn't stop`);
@@ -114,23 +114,23 @@ class Visualizer {
     animate() {
         console.debug('visualizer starting animation');
         const visualizer = this;
-        const analyzer = visualizer.#analyser;
-        const analyserTimeDomainData = visualizer.#analyserTimeDomainData;
-        const analyserFrequencyData = visualizer.#analyserFrequencyData;
-        const canvas = visualizer.#canvas;
-        const canvasContext = visualizer.#canvasContext;
+        const analyzer = visualizer.analyser;
+        const analyserTimeDomainData = visualizer.analyserTimeDomainData;
+        const analyserFrequencyData = visualizer.analyserFrequencyData;
+        const canvas = visualizer.canvas;
+        const canvasContext = visualizer.canvasContext;
 
         // Realising the animation loop by defining a frame-drawing method, recursively requesting animation frames
         let frame = function () {
 
             // Not necessarily cool for performance, but fancy: Grab the current style info from the DOM
-            let domElementStyle = getComputedStyle(visualizer.#canvas);
-            visualizer.#color = domElementStyle.getPropertyValue('color');
+            let domElementStyle = getComputedStyle(visualizer.canvas);
+            visualizer.color = domElementStyle.getPropertyValue('color');
             canvas.width = domElementStyle.getPropertyValue('width').replace('px', '');
             canvas.height = domElementStyle.getPropertyValue('height').replace('px', '');
 
             // Check whether the visualization should be running
-            if (visualizer.#isVisualizing === true) {
+            if (visualizer.isVisualizing === true) {
 
                 // Request the next animation frame
                 requestAnimationFrame(frame);
@@ -155,7 +155,7 @@ class Visualizer {
                     // Draw the current ring
                     canvasContext.beginPath();
                     canvasContext.arc(canvas.width / 2, canvas.height / 2, radius, 0, 2 * Math.PI);
-                    canvasContext.strokeStyle = `${visualizer.#color.replace('rgb', 'rgba').replace(')', ','+ opacity + ')')}`;
+                    canvasContext.strokeStyle = `${visualizer.color.replace('rgb', 'rgba').replace(')', ','+ opacity + ')')}`;
                     canvasContext.stroke();
                 }
 
@@ -177,7 +177,7 @@ class Visualizer {
                     let fftArcEnd = fftArcCenter + fftArcLength * (i + 1) / 2;
 
                     // Set the line color and calculated opacity
-                    canvasContext.strokeStyle = `${visualizer.#color.replace('rgb', 'rgba').replace(')', ', '+ (v / 128).toFixed(2) + ')')}`;
+                    canvasContext.strokeStyle = `${visualizer.color.replace('rgb', 'rgba').replace(')', ', '+ (v / 128).toFixed(2) + ')')}`;
 
                     // Calculate the radius and line width to size the visualizer segments and make them bounce
                     let fftBoost = (v / 128) * radius * 0.25 // Substitute with 'Math.log2(v) * 2' for a less hectic look
