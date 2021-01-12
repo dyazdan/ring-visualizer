@@ -91,6 +91,9 @@ class Visualizer {
 
     // Starts the visualization and animation loop
     start() {
+        // Resume the audio context (e.g. if it was suspended by audioplay suppression
+        if(this.audioContext.state === 'suspended') {this.audioContext.resume()}
+
         if (this.isReady === true) {
             this.isVisualizing = true;
             this.animate();
